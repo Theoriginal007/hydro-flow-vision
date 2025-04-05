@@ -1,221 +1,177 @@
 
 import { useState, useRef } from "react";
-import { Upload, X, Check, FileText, AlertTriangle } from "lucide-react";
+import { UploadCloud, File, X, CheckCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Progress } from "@/components/ui/progress";
-import { useToast } from "@/components/ui/use-toast";
+import { useToast } from "@/hooks/use-toast";
 
 interface FileUploaderProps {
   onFilesUploaded: (files: File[]) => void;
+  acceptedFileTypes?: string;
+  maxFileSize?: number; // in bytes
+  maxFiles?: number;
 }
 
-export const FileUploader = ({ onFilesUploaded }: FileUploaderProps) => {
+export function FileUploader({
+  onFilesUploaded,
+  acceptedFileTypes = ".csv, .xlsx, .pdf",
+  maxFileSize = 10 * 1024 * 1024, // 10MB
+  maxFiles = 5
+}: FileUploaderProps) {
+  const [uploadedFiles, setUploadedFiles] = useState<File[]>([]);
   const [isDragging, setIsDragging] = useState(false);
-  const [isUploading, setIsUploading] = useState(false);
-  const [uploadProgress, setUploadProgress] = useState(0);
-  const [files, setFiles] = useState<File[]>([]);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const { toast } = useToast();
-  
-  const handleDragEnter = (e: React.DragEvent<HTMLDivElement>) => {
+
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (!e.target.files) return;
+    
+    const newFiles = Array.from(e.target.files);
+    processFiles(newFiles);
+  };
+
+  const handleDragOver = (e: React.DragEvent) => {
     e.preventDefault();
-    e.stopPropagation();
     setIsDragging(true);
   };
-  
-  const handleDragLeave = (e: React.DragEvent<HTMLDivElement>) => {
-    e.preventDefault();
-    e.stopPropagation();
+
+  const handleDragLeave = () => {
     setIsDragging(false);
   };
-  
-  const handleDragOver = (e: React.DragEvent<HTMLDivElement>) => {
+
+  const handleDrop = (e: React.DragEvent) => {
     e.preventDefault();
-    e.stopPropagation();
-  };
-  
-  const handleDrop = (e: React.DragEvent<HTMLDivElement>) => {
-    e.preventDefault();
-    e.stopPropagation();
     setIsDragging(false);
     
-    const droppedFiles = Array.from(e.dataTransfer.files);
+    if (!e.dataTransfer.files || e.dataTransfer.files.length === 0) return;
     
-    // Filter for CSV, XLS, XLSX, PDF, etc. files that might be water test results
-    const validFiles = droppedFiles.filter(file => {
-      const extension = file.name.split('.').pop()?.toLowerCase();
-      return ['csv', 'xls', 'xlsx', 'pdf', 'txt', 'json'].includes(extension || '');
-    });
-    
-    if (validFiles.length === 0) {
+    const newFiles = Array.from(e.dataTransfer.files);
+    processFiles(newFiles);
+  };
+
+  const processFiles = (newFiles: File[]) => {
+    // Check if adding these files would exceed the maximum
+    if (uploadedFiles.length + newFiles.length > maxFiles) {
       toast({
-        title: "Invalid file format",
-        description: "Please upload CSV, Excel, PDF, or text files containing water test results",
-        variant: "destructive",
+        title: "Too many files",
+        description: `You can upload a maximum of ${maxFiles} files.`,
+        variant: "destructive"
       });
       return;
     }
     
-    if (validFiles.length !== droppedFiles.length) {
+    // Validate file types and sizes
+    const invalidFiles: string[] = [];
+    const validFiles: File[] = [];
+    
+    newFiles.forEach(file => {
+      const fileExtension = file.name.split('.').pop()?.toLowerCase();
+      const isValidType = acceptedFileTypes.includes(fileExtension || '');
+      
+      if (!isValidType) {
+        invalidFiles.push(`${file.name} (invalid type)`);
+      } else if (file.size > maxFileSize) {
+        invalidFiles.push(`${file.name} (too large)`);
+      } else {
+        validFiles.push(file);
+      }
+    });
+    
+    // Show error for invalid files
+    if (invalidFiles.length > 0) {
       toast({
-        title: "Some files were skipped",
-        description: "Only valid water test result formats were accepted",
-        variant: "default",
+        title: "Some files couldn't be uploaded",
+        description: `The following files were rejected: ${invalidFiles.join(', ')}`,
+        variant: "destructive"
       });
     }
     
-    handleFiles(validFiles);
-  };
-  
-  const handleFileInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files && e.target.files.length > 0) {
-      const selectedFiles = Array.from(e.target.files);
-      handleFiles(selectedFiles);
+    // Add valid files to the state
+    if (validFiles.length > 0) {
+      const updatedFiles = [...uploadedFiles, ...validFiles];
+      setUploadedFiles(updatedFiles);
+      onFilesUploaded(updatedFiles);
+      
+      toast({
+        title: "Files uploaded",
+        description: `Successfully uploaded ${validFiles.length} file(s)`,
+      });
     }
   };
-  
-  const handleFiles = (newFiles: File[]) => {
-    setFiles([...files, ...newFiles]);
-    toast({
-      title: `${newFiles.length} file${newFiles.length > 1 ? 's' : ''} added`,
-      description: "Ready for processing",
-    });
-  };
-  
+
   const removeFile = (index: number) => {
-    const updatedFiles = [...files];
-    updatedFiles.splice(index, 1);
-    setFiles(updatedFiles);
+    const updatedFiles = uploadedFiles.filter((_, i) => i !== index);
+    setUploadedFiles(updatedFiles);
+    onFilesUploaded(updatedFiles);
   };
-  
-  const uploadFiles = () => {
-    if (files.length === 0) {
-      toast({
-        title: "No files to upload",
-        description: "Please select at least one file",
-        variant: "destructive",
-      });
-      return;
-    }
-    
-    setIsUploading(true);
-    setUploadProgress(0);
-    
-    // Simulate file upload with progress
-    const interval = setInterval(() => {
-      setUploadProgress(prev => {
-        if (prev >= 100) {
-          clearInterval(interval);
-          setIsUploading(false);
-          
-          // After "upload" complete, pass files to parent component
-          onFilesUploaded(files);
-          
-          toast({
-            title: "Upload complete",
-            description: `${files.length} file${files.length > 1 ? 's' : ''} processed successfully`,
-            variant: "default",
-          });
-          return 100;
-        }
-        return prev + Math.random() * 15;
-      });
-    }, 300);
-  };
-  
+
   const triggerFileInput = () => {
     fileInputRef.current?.click();
   };
-  
+
   return (
     <div className="space-y-4">
+      {/* Drop zone */}
       <div
-        className={`border-2 border-dashed rounded-lg p-8 text-center transition-colors ${
-          isDragging 
-            ? 'border-water-dark bg-water-light/30' 
-            : 'border-gray-200 bg-gray-50 hover:border-gray-300'
+        className={`border-2 border-dashed rounded-lg p-6 text-center ${
+          isDragging ? "border-blue-500 bg-blue-50" : "border-gray-300"
         }`}
-        onDragEnter={handleDragEnter}
-        onDragLeave={handleDragLeave}
         onDragOver={handleDragOver}
+        onDragLeave={handleDragLeave}
         onDrop={handleDrop}
+        onClick={triggerFileInput}
       >
+        <UploadCloud className="mx-auto h-12 w-12 text-gray-400" />
+        <p className="mt-2 text-sm font-medium">
+          Drag and drop files here, or click to browse
+        </p>
+        <p className="mt-1 text-xs text-gray-500">
+          Supports {acceptedFileTypes} up to {(maxFileSize / (1024 * 1024)).toFixed(0)}MB
+        </p>
         <input
           type="file"
           ref={fileInputRef}
-          onChange={handleFileInputChange}
-          style={{ display: 'none' }}
+          className="hidden"
           multiple
-          accept=".csv,.xls,.xlsx,.pdf,.txt,.json"
+          accept={acceptedFileTypes}
+          onChange={handleFileChange}
         />
-        
-        <Upload className={`h-10 w-10 mx-auto mb-4 ${isDragging ? 'text-water-dark' : 'text-gray-400'}`} />
-        <h3 className="text-lg font-medium mb-1">Upload Lab Results</h3>
-        <p className="text-sm text-gray-500">
-          Drag and drop your water test results or click to browse
-        </p>
-        <Button className="mt-4" onClick={triggerFileInput}>
-          Select Files
-        </Button>
       </div>
-      
-      {files.length > 0 && (
-        <div className="p-4 rounded-md bg-white border border-gray-200">
-          <h4 className="font-medium mb-2 text-gray-900">
-            Selected Files ({files.length})
-          </h4>
-          <div className="space-y-2 max-h-40 overflow-y-auto mb-4">
-            {files.map((file, index) => (
-              <div 
-                key={index} 
-                className="flex items-center justify-between p-2 rounded bg-gray-50"
+
+      {/* File list */}
+      {uploadedFiles.length > 0 && (
+        <div className="bg-gray-50 rounded-lg p-3">
+          <p className="text-sm font-medium mb-2">Uploaded Files:</p>
+          <ul className="space-y-2">
+            {uploadedFiles.map((file, index) => (
+              <li
+                key={`${file.name}-${index}`}
+                className="flex items-center justify-between bg-white p-2 rounded border"
               >
-                <div className="flex items-center">
-                  <FileText className="h-4 w-4 mr-2 text-blue-500" />
-                  <span className="text-sm truncate max-w-[200px] text-gray-900">
-                    {file.name}
-                  </span>
-                  <span className="text-xs ml-2 text-gray-500">
-                    {(file.size / 1024).toFixed(1)} KB
+                <div className="flex items-center space-x-2">
+                  <File className="h-4 w-4 text-blue-500" />
+                  <span className="text-sm truncate max-w-[200px]">{file.name}</span>
+                  <span className="text-xs text-gray-500">
+                    ({(file.size / 1024).toFixed(1)} KB)
                   </span>
                 </div>
-                <Button
-                  variant="ghost"
-                  size="sm"
-                  className="h-8 w-8 p-0 rounded-full"
-                  onClick={() => removeFile(index)}
-                  disabled={isUploading}
-                >
-                  <X className="h-4 w-4" />
-                </Button>
-              </div>
+                <div className="flex items-center">
+                  <CheckCircle className="h-4 w-4 text-green-500 mr-2" />
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      removeFile(index);
+                    }}
+                  >
+                    <X className="h-4 w-4 text-red-500" />
+                  </Button>
+                </div>
+              </li>
             ))}
-          </div>
-          
-          {isUploading ? (
-            <div className="space-y-2">
-              <div className="flex justify-between text-sm">
-                <span>Uploading...</span>
-                <span>{Math.min(100, Math.floor(uploadProgress))}%</span>
-              </div>
-              <Progress value={Math.min(100, uploadProgress)} className="h-2" />
-            </div>
-          ) : (
-            <div className="flex justify-between">
-              <Button 
-                variant="outline" 
-                onClick={() => setFiles([])}
-                className="text-xs"
-              >
-                Clear All
-              </Button>
-              <Button onClick={uploadFiles}>
-                Process Files
-              </Button>
-            </div>
-          )}
+          </ul>
         </div>
       )}
     </div>
   );
-};
+}

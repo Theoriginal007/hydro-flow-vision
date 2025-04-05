@@ -14,7 +14,6 @@ import { Separator } from "@/components/ui/separator";
 import { Badge } from "@/components/ui/badge";
 
 const NotificationSettings = () => {
-  const [isEmergencyMode, setIsEmergencyMode] = useState(false);
   const isMobile = useIsMobile();
   const { toast } = useToast();
   
@@ -72,10 +71,10 @@ const NotificationSettings = () => {
   };
 
   return (
-    <div className={`min-h-screen ${isEmergencyMode ? 'emergency-mode' : ''}`}>
-      <Navbar isEmergencyMode={isEmergencyMode} setIsEmergencyMode={setIsEmergencyMode} />
+    <div className="min-h-screen">
+      <Navbar />
       <div className="flex">
-        {!isMobile && <Sidebar isEmergencyMode={isEmergencyMode} />}
+        {!isMobile && <Sidebar />}
         <main className="flex-1 p-4 md:p-6">
           <Breadcrumb className="mb-4 md:mb-6">
             <BreadcrumbList>
@@ -105,16 +104,16 @@ const NotificationSettings = () => {
           </Breadcrumb>
 
           <div className="mb-6">
-            <h1 className={`text-3xl font-bold mb-2 ${isEmergencyMode ? 'text-water-danger' : 'text-water-dark'}`}>
+            <h1 className="text-3xl font-bold mb-2 text-water-dark">
               Notification Preferences
             </h1>
-            <p className={`text-lg ${isEmergencyMode ? 'text-gray-300' : 'text-gray-600'}`}>
+            <p className="text-lg text-gray-600">
               Manage how and when you receive updates and alerts
             </p>
           </div>
 
           <div className="grid grid-cols-1 gap-6">
-            <Card className={isEmergencyMode ? 'bg-black/60 border-water-danger/30 text-white' : 'bg-white'}>
+            <Card>
               <CardHeader>
                 <div className="flex items-center gap-3">
                   <Badge className="px-2 py-1 bg-blue-600">
@@ -123,7 +122,7 @@ const NotificationSettings = () => {
                   </Badge>
                   <CardTitle>Email Notifications</CardTitle>
                 </div>
-                <CardDescription className={isEmergencyMode ? 'text-gray-300' : 'text-gray-600'}>
+                <CardDescription className="text-gray-600">
                   Control which emails you receive from the system
                 </CardDescription>
               </CardHeader>
@@ -132,7 +131,7 @@ const NotificationSettings = () => {
                   <div className="flex items-center justify-between">
                     <div>
                       <h3 className="font-medium">Critical Water Quality Alerts</h3>
-                      <p className={`text-sm ${isEmergencyMode ? 'text-gray-300' : 'text-gray-600'}`}>
+                      <p className="text-sm text-gray-600">
                         Receive immediate alerts for critical water quality issues
                       </p>
                     </div>
@@ -146,7 +145,7 @@ const NotificationSettings = () => {
                   <div className="flex items-center justify-between">
                     <div>
                       <h3 className="font-medium">Weekly Summary Reports</h3>
-                      <p className={`text-sm ${isEmergencyMode ? 'text-gray-300' : 'text-gray-600'}`}>
+                      <p className="text-sm text-gray-600">
                         Receive weekly summary reports of all water quality data
                       </p>
                     </div>
@@ -160,7 +159,7 @@ const NotificationSettings = () => {
                   <div className="flex items-center justify-between">
                     <div>
                       <h3 className="font-medium">System Updates</h3>
-                      <p className={`text-sm ${isEmergencyMode ? 'text-gray-300' : 'text-gray-600'}`}>
+                      <p className="text-sm text-gray-600">
                         Receive notifications about system updates and maintenance
                       </p>
                     </div>
@@ -174,7 +173,7 @@ const NotificationSettings = () => {
                   <div className="flex items-center justify-between">
                     <div>
                       <h3 className="font-medium">Team Messages</h3>
-                      <p className={`text-sm ${isEmergencyMode ? 'text-gray-300' : 'text-gray-600'}`}>
+                      <p className="text-sm text-gray-600">
                         Receive email notifications for team communications
                       </p>
                     </div>
@@ -188,7 +187,7 @@ const NotificationSettings = () => {
                   <div className="flex items-center justify-between">
                     <div>
                       <h3 className="font-medium">New Water Samples</h3>
-                      <p className={`text-sm ${isEmergencyMode ? 'text-gray-300' : 'text-gray-600'}`}>
+                      <p className="text-sm text-gray-600">
                         Get notified when new water samples are added to the system
                       </p>
                     </div>
@@ -201,7 +200,7 @@ const NotificationSettings = () => {
               </CardContent>
             </Card>
 
-            <Card className={isEmergencyMode ? 'bg-black/60 border-water-danger/30 text-white' : 'bg-white'}>
+            <Card>
               <CardHeader>
                 <div className="flex items-center gap-3">
                   <Badge className="px-2 py-1 bg-purple-600">
@@ -210,7 +209,7 @@ const NotificationSettings = () => {
                   </Badge>
                   <CardTitle>Push Notifications</CardTitle>
                 </div>
-                <CardDescription className={isEmergencyMode ? 'text-gray-300' : 'text-gray-600'}>
+                <CardDescription className="text-gray-600">
                   Configure browser and mobile push notifications
                 </CardDescription>
               </CardHeader>
@@ -219,7 +218,7 @@ const NotificationSettings = () => {
                   <div className="flex items-center justify-between">
                     <div>
                       <h3 className="font-medium">Critical Water Quality Alerts</h3>
-                      <p className={`text-sm ${isEmergencyMode ? 'text-gray-300' : 'text-gray-600'}`}>
+                      <p className="text-sm text-gray-600">
                         Receive immediate push alerts for critical water quality issues
                       </p>
                     </div>
@@ -233,7 +232,7 @@ const NotificationSettings = () => {
                   <div className="flex items-center justify-between">
                     <div>
                       <h3 className="font-medium">Quality Parameter Alerts</h3>
-                      <p className={`text-sm ${isEmergencyMode ? 'text-gray-300' : 'text-gray-600'}`}>
+                      <p className="text-sm text-gray-600">
                         Get notified when water quality parameters exceed thresholds
                       </p>
                     </div>
@@ -247,7 +246,7 @@ const NotificationSettings = () => {
                   <div className="flex items-center justify-between">
                     <div>
                       <h3 className="font-medium">System Updates</h3>
-                      <p className={`text-sm ${isEmergencyMode ? 'text-gray-300' : 'text-gray-600'}`}>
+                      <p className="text-sm text-gray-600">
                         Receive push notifications about system updates
                       </p>
                     </div>
@@ -261,7 +260,7 @@ const NotificationSettings = () => {
                   <div className="flex items-center justify-between">
                     <div>
                       <h3 className="font-medium">Team Messages</h3>
-                      <p className={`text-sm ${isEmergencyMode ? 'text-gray-300' : 'text-gray-600'}`}>
+                      <p className="text-sm text-gray-600">
                         Receive push notifications for team communications
                       </p>
                     </div>
@@ -275,7 +274,7 @@ const NotificationSettings = () => {
                   <div className="flex items-center justify-between">
                     <div>
                       <h3 className="font-medium">New Water Samples</h3>
-                      <p className={`text-sm ${isEmergencyMode ? 'text-gray-300' : 'text-gray-600'}`}>
+                      <p className="text-sm text-gray-600">
                         Get push notifications when new samples are added
                       </p>
                     </div>
@@ -288,7 +287,7 @@ const NotificationSettings = () => {
               </CardContent>
             </Card>
 
-            <Card className={isEmergencyMode ? 'bg-black/60 border-water-danger/30 text-white' : 'bg-white'}>
+            <Card>
               <CardHeader>
                 <div className="flex items-center gap-3">
                   <Badge className="px-2 py-1 bg-green-600">
@@ -297,7 +296,7 @@ const NotificationSettings = () => {
                   </Badge>
                   <CardTitle>SMS Notifications</CardTitle>
                 </div>
-                <CardDescription className={isEmergencyMode ? 'text-gray-300' : 'text-gray-600'}>
+                <CardDescription className="text-gray-600">
                   Configure text message alerts for critical situations
                 </CardDescription>
               </CardHeader>
@@ -306,7 +305,7 @@ const NotificationSettings = () => {
                   <div className="flex items-center justify-between">
                     <div>
                       <h3 className="font-medium">Critical Water Quality Alerts</h3>
-                      <p className={`text-sm ${isEmergencyMode ? 'text-gray-300' : 'text-gray-600'}`}>
+                      <p className="text-sm text-gray-600">
                         Receive immediate SMS alerts for critical water quality issues
                       </p>
                     </div>
@@ -320,7 +319,7 @@ const NotificationSettings = () => {
                   <div className="flex items-center justify-between">
                     <div>
                       <h3 className="font-medium">Quality Parameter Alerts</h3>
-                      <p className={`text-sm ${isEmergencyMode ? 'text-gray-300' : 'text-gray-600'}`}>
+                      <p className="text-sm text-gray-600">
                         Get SMS when water quality parameters exceed thresholds
                       </p>
                     </div>
@@ -334,7 +333,7 @@ const NotificationSettings = () => {
                   <div className="flex items-center justify-between">
                     <div>
                       <h3 className="font-medium">System Updates</h3>
-                      <p className={`text-sm ${isEmergencyMode ? 'text-gray-300' : 'text-gray-600'}`}>
+                      <p className="text-sm text-gray-600">
                         Receive SMS about system updates and maintenance
                       </p>
                     </div>
@@ -348,7 +347,7 @@ const NotificationSettings = () => {
                   <div className="flex items-center justify-between">
                     <div>
                       <h3 className="font-medium">Team Messages</h3>
-                      <p className={`text-sm ${isEmergencyMode ? 'text-gray-300' : 'text-gray-600'}`}>
+                      <p className="text-sm text-gray-600">
                         Receive SMS for important team communications
                       </p>
                     </div>
@@ -362,7 +361,7 @@ const NotificationSettings = () => {
                   <div className="flex items-center justify-between">
                     <div>
                       <h3 className="font-medium">New Water Samples</h3>
-                      <p className={`text-sm ${isEmergencyMode ? 'text-gray-300' : 'text-gray-600'}`}>
+                      <p className="text-sm text-gray-600">
                         Get SMS when new water samples are added
                       </p>
                     </div>
@@ -382,7 +381,7 @@ const NotificationSettings = () => {
           </div>
         </main>
       </div>
-      {isMobile && <Sidebar isEmergencyMode={isEmergencyMode} />}
+      {isMobile && <Sidebar />}
     </div>
   );
 };
