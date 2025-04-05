@@ -22,13 +22,19 @@ AquaPure AI is a comprehensive water treatment management system that uses artif
 - Interactive treatment method simulation
 - Treatment recommendation form with:
   - Client information collection
-  - Water source details
-  - Lab results upload and manual entry
-  - Location and installation details
-  - Budget constraints and urgency settings
-  - Industry-specific requirements
-- Budget and timeline estimation
-- Real-time quotation system
+  - Water source details (Borehole, River, Tap, Well, Other)
+  - Daily water requirements and flow rates
+  - Hours of operation selection (1-4, 5-8, 9-12, 24 hours)
+  - Intended water use (Domestic, Industrial, Agricultural, Other)
+  - Lab results upload and manual parameter entry
+  - Location and region selection for installation logistics
+  - Budget constraints with slider interface
+  - Urgency settings (Immediate, Short-term, Long-term)
+  - Industry-specific requirements (Beverages, Pharmaceuticals, Bottling, Agriculture, Industrial)
+- AI-powered treatment recommendations
+- Provisional quotation system with component breakdown
+- Real-time cost estimation
+- Final quote generation
 
 ### AI Reports
 - Automated water quality analysis
@@ -55,16 +61,35 @@ AquaPure AI is a comprehensive water treatment management system that uses artif
 The treatment recommendation form collects comprehensive data about:
 
 - Client information: Name and contact details
-- Water source: Source type, daily requirements, flow rates, and hours of operation
-- Lab results: Upload capability and manual parameter entry (pH, TDS, conductivity, etc.)
-- Location details: Installation address and region
-- Budget constraints: Maximum budget and urgency level
-- Industry specifications: Type of industry and specific requirements
+- Water source: Source type (Borehole, River, Tap, Well, Other), daily requirements, flow rates, and hours of operation
+- Lab results: Upload capability and manual parameter entry (pH, TDS, conductivity, hardness, iron)
+- Location details: Installation address and region selection
+- Budget constraints: Maximum budget with slider interface and urgency level selection
+- Industry specifications: Type of industry (Beverages, Pharmaceuticals, Bottling, Agriculture, Industrial)
 
 Based on this data, the AI generates:
-- Customized treatment recommendations
-- Provisional quotes with component breakdown
-- Estimated delivery timelines
+- Customized treatment recommendations based on water quality parameters
+- Provisional quotes with component-by-component breakdown
+- Estimated delivery timelines based on urgency level
+- Final quotations after comprehensive review
+
+## Smart Recommendation Engine
+
+The system analyzes multiple data points to provide intelligent recommendations:
+- Water source type determines filtration requirements
+- pH level triggers appropriate correction systems
+- TDS levels influence membrane filtration recommendations
+- Iron content suggests specialized removal systems
+- Industry type customizes solutions for specific requirements
+
+## Quote Generation System
+
+The quotation system provides:
+- Component-level pricing breakdown
+- Installation and service estimates
+- Timeline projections based on urgency
+- Dynamic recalculation based on selected components
+- Final quote generation with detailed specifications
 
 ## Settings
 
