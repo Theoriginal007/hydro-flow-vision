@@ -8,12 +8,9 @@ import {
   MessageCircle, 
   Brain, 
   BarChart, 
-  Camera, 
-  Database, 
-  AlertTriangle, 
-  Menu,
   ChevronDown,
-  ChevronUp
+  ChevronUp,
+  Menu
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { VoiceCommandButton } from "@/components/ui/voice-command-button";
