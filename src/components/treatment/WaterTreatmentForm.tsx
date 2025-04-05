@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { z } from "zod";
 import { useForm } from "react-hook-form";
@@ -337,6 +336,7 @@ export function WaterTreatmentForm() {
                       <FormControl>
                         <Input type="number" placeholder="e.g., 1000" {...field} />
                       </FormControl>
+                      <FormDescription>Enter the required daily water in liters</FormDescription>
                       <FormMessage />
                     </FormItem>
                   )}
@@ -351,6 +351,7 @@ export function WaterTreatmentForm() {
                       <FormControl>
                         <Input type="number" placeholder="e.g., 100" {...field} />
                       </FormControl>
+                      <FormDescription>Enter the water flow rate in liters per hour</FormDescription>
                       <FormMessage />
                     </FormItem>
                   )}
@@ -376,6 +377,7 @@ export function WaterTreatmentForm() {
                         <SelectItem value="24">Full day (24 hours)</SelectItem>
                       </SelectContent>
                     </Select>
+                    <FormDescription>Select the daily operational hours for the water system</FormDescription>
                     <FormMessage />
                   </FormItem>
                 )}
