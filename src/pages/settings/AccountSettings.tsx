@@ -14,7 +14,6 @@ import { Label } from "@/components/ui/label";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
 const AccountSettings = () => {
-  const [isEmergencyMode, setIsEmergencyMode] = useState(false);
   const isMobile = useIsMobile();
   const { toast } = useToast();
   
@@ -46,10 +45,10 @@ const AccountSettings = () => {
   };
 
   return (
-    <div className={`min-h-screen ${isEmergencyMode ? 'emergency-mode' : ''}`}>
-      <Navbar isEmergencyMode={isEmergencyMode} setIsEmergencyMode={setIsEmergencyMode} />
+    <div className="min-h-screen">
+      <Navbar />
       <div className="flex">
-        {!isMobile && <Sidebar isEmergencyMode={isEmergencyMode} />}
+        {!isMobile && <Sidebar />}
         <main className="flex-1 p-4 md:p-6">
           <Breadcrumb className="mb-4 md:mb-6">
             <BreadcrumbList>
@@ -79,17 +78,17 @@ const AccountSettings = () => {
           </Breadcrumb>
 
           <div className="mb-6">
-            <h1 className={`text-3xl font-bold mb-2 ${isEmergencyMode ? 'text-water-danger' : 'text-water-dark'}`}>
+            <h1 className="text-3xl font-bold mb-2 text-water-dark">
               Account Settings
             </h1>
-            <p className={`text-lg ${isEmergencyMode ? 'text-gray-300' : 'text-gray-600'}`}>
+            <p className="text-lg text-gray-600">
               Manage your personal account information
             </p>
           </div>
 
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
             <div className="lg:col-span-1">
-              <Card className={`h-full ${isEmergencyMode ? 'bg-black/60 border-water-danger/30 text-white' : 'bg-white'}`}>
+              <Card className="h-full bg-white">
                 <CardHeader>
                   <div className="flex flex-col items-center">
                     <Avatar className="h-32 w-32 mb-4">
@@ -97,23 +96,23 @@ const AccountSettings = () => {
                       <AvatarFallback>JD</AvatarFallback>
                     </Avatar>
                     <h2 className="text-2xl font-bold">{userData.fullName}</h2>
-                    <p className={`${isEmergencyMode ? 'text-gray-300' : 'text-gray-600'}`}>{userData.role}</p>
+                    <p className="text-gray-600">{userData.role}</p>
                   </div>
                 </CardHeader>
                 <CardContent>
                   <div className="space-y-4">
                     <div>
                       <h3 className="font-medium">Department</h3>
-                      <p className={`${isEmergencyMode ? 'text-gray-300' : 'text-gray-600'}`}>{userData.department}</p>
+                      <p className="text-gray-600">{userData.department}</p>
                     </div>
                     <div>
                       <h3 className="font-medium">Contact</h3>
-                      <p className={`${isEmergencyMode ? 'text-gray-300' : 'text-gray-600'}`}>{userData.email}</p>
-                      <p className={`${isEmergencyMode ? 'text-gray-300' : 'text-gray-600'}`}>{userData.phone}</p>
+                      <p className="text-gray-600">{userData.email}</p>
+                      <p className="text-gray-600">{userData.phone}</p>
                     </div>
                     <div>
                       <h3 className="font-medium">Location</h3>
-                      <p className={`${isEmergencyMode ? 'text-gray-300' : 'text-gray-600'}`}>{userData.location}</p>
+                      <p className="text-gray-600">{userData.location}</p>
                     </div>
                   </div>
                 </CardContent>
@@ -126,7 +125,7 @@ const AccountSettings = () => {
             </div>
             
             <div className="lg:col-span-2">
-              <Card className={isEmergencyMode ? 'bg-black/60 border-water-danger/30 text-white' : 'bg-white'}>
+              <Card className="bg-white">
                 <CardHeader>
                   <h2 className="text-xl font-bold">Personal Information</h2>
                 </CardHeader>
@@ -140,7 +139,6 @@ const AccountSettings = () => {
                           name="fullName" 
                           value={userData.fullName} 
                           onChange={handleInputChange}
-                          className={isEmergencyMode ? 'bg-gray-800 border-gray-700 text-white' : ''}
                         />
                       </div>
                       <div className="space-y-2">
@@ -151,7 +149,6 @@ const AccountSettings = () => {
                           type="email" 
                           value={userData.email} 
                           onChange={handleInputChange}
-                          className={isEmergencyMode ? 'bg-gray-800 border-gray-700 text-white' : ''}
                         />
                       </div>
                       <div className="space-y-2">
@@ -161,7 +158,6 @@ const AccountSettings = () => {
                           name="role" 
                           value={userData.role} 
                           onChange={handleInputChange}
-                          className={isEmergencyMode ? 'bg-gray-800 border-gray-700 text-white' : ''}
                         />
                       </div>
                       <div className="space-y-2">
@@ -171,7 +167,6 @@ const AccountSettings = () => {
                           name="department" 
                           value={userData.department} 
                           onChange={handleInputChange}
-                          className={isEmergencyMode ? 'bg-gray-800 border-gray-700 text-white' : ''}
                         />
                       </div>
                       <div className="space-y-2">
@@ -181,7 +176,6 @@ const AccountSettings = () => {
                           name="phone" 
                           value={userData.phone} 
                           onChange={handleInputChange}
-                          className={isEmergencyMode ? 'bg-gray-800 border-gray-700 text-white' : ''}
                         />
                       </div>
                       <div className="space-y-2">
@@ -191,7 +185,6 @@ const AccountSettings = () => {
                           name="location" 
                           value={userData.location} 
                           onChange={handleInputChange}
-                          className={isEmergencyMode ? 'bg-gray-800 border-gray-700 text-white' : ''}
                         />
                       </div>
                       <div className="space-y-2">
@@ -201,7 +194,6 @@ const AccountSettings = () => {
                           name="timezone" 
                           value={userData.timezone} 
                           onChange={handleInputChange}
-                          className={isEmergencyMode ? 'bg-gray-800 border-gray-700 text-white' : ''}
                         />
                       </div>
                       <div className="space-y-2">
@@ -211,7 +203,6 @@ const AccountSettings = () => {
                           name="language" 
                           value={userData.language} 
                           onChange={handleInputChange}
-                          className={isEmergencyMode ? 'bg-gray-800 border-gray-700 text-white' : ''}
                         />
                       </div>
                     </div>
@@ -222,11 +213,7 @@ const AccountSettings = () => {
                         id="bio" 
                         name="bio"
                         rows={4} 
-                        className={`w-full min-h-[120px] rounded-md border p-3 text-sm ${
-                          isEmergencyMode 
-                            ? 'bg-gray-800 border-gray-700 text-white' 
-                            : 'border-gray-300'
-                        }`}
+                        className="w-full min-h-[120px] rounded-md border p-3 text-sm border-gray-300"
                         value={userData.bio} 
                         onChange={handleInputChange}
                       />
@@ -243,7 +230,7 @@ const AccountSettings = () => {
           </div>
         </main>
       </div>
-      {isMobile && <Sidebar isEmergencyMode={isEmergencyMode} />}
+      {isMobile && <Sidebar />}
     </div>
   );
 };

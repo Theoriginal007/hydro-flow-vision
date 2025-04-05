@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { Navbar } from "@/components/layout/Navbar";
 import { Sidebar } from "@/components/layout/Sidebar";
@@ -41,7 +40,6 @@ import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 
 const Profile = () => {
-  const [isEmergencyMode, setIsEmergencyMode] = useState(false);
   const isMobile = useIsMobile();
   const { toast } = useToast();
   const [isEditDialogOpen, setIsEditDialogOpen] = useState(false);
@@ -166,10 +164,10 @@ const Profile = () => {
   };
 
   return (
-    <div className={`min-h-screen ${isEmergencyMode ? 'emergency-mode' : ''}`}>
-      <Navbar isEmergencyMode={isEmergencyMode} setIsEmergencyMode={setIsEmergencyMode} />
+    <div className="min-h-screen">
+      <Navbar />
       <div className="flex">
-        {!isMobile && <Sidebar isEmergencyMode={isEmergencyMode} />}
+        {!isMobile && <Sidebar />}
         <main className="flex-1 p-4 md:p-6">
           <Breadcrumb className="mb-4 md:mb-6">
             <BreadcrumbList>
@@ -192,7 +190,7 @@ const Profile = () => {
 
           <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
             <div className="lg:col-span-1">
-              <Card className={`h-full ${isEmergencyMode ? 'bg-black/60 border-water-danger/30 text-white' : 'bg-white'}`}>
+              <Card className="h-full bg-white">
                 <CardHeader className="text-center">
                   <div className="relative mx-auto">
                     <Avatar className="h-32 w-32 mb-4 mx-auto border-4 border-white shadow-lg">
@@ -210,7 +208,7 @@ const Profile = () => {
                     </Button>
                   </div>
                   <CardTitle className="text-2xl">{userData.fullName}</CardTitle>
-                  <CardDescription className={isEmergencyMode ? 'text-gray-300' : 'text-gray-600'}>
+                  <CardDescription className="text-gray-600">
                     {userData.title}
                   </CardDescription>
                   <div className="flex justify-center gap-2 mt-2">
@@ -230,7 +228,7 @@ const Profile = () => {
                       <Mail className="h-4 w-4 text-gray-500" />
                       <div className="flex-1 min-w-0">
                         <p className="text-sm font-medium">Email</p>
-                        <p className={`text-sm truncate ${isEmergencyMode ? 'text-gray-300' : 'text-gray-600'}`}>
+                        <p className="text-sm truncate text-gray-600">
                           {userData.email}
                         </p>
                       </div>
@@ -247,7 +245,7 @@ const Profile = () => {
                       <Phone className="h-4 w-4 text-gray-500" />
                       <div className="flex-1 min-w-0">
                         <p className="text-sm font-medium">Phone</p>
-                        <p className={`text-sm truncate ${isEmergencyMode ? 'text-gray-300' : 'text-gray-600'}`}>
+                        <p className="text-sm truncate text-gray-600">
                           {userData.phone}
                         </p>
                       </div>
@@ -264,7 +262,7 @@ const Profile = () => {
                       <MapPin className="h-4 w-4 text-gray-500" />
                       <div className="flex-1 min-w-0">
                         <p className="text-sm font-medium">Location</p>
-                        <p className={`text-sm truncate ${isEmergencyMode ? 'text-gray-300' : 'text-gray-600'}`}>
+                        <p className="text-sm truncate text-gray-600">
                           {userData.location}
                         </p>
                       </div>
@@ -281,7 +279,7 @@ const Profile = () => {
                       <Briefcase className="h-4 w-4 text-gray-500" />
                       <div className="flex-1 min-w-0">
                         <p className="text-sm font-medium">Department</p>
-                        <p className={`text-sm truncate ${isEmergencyMode ? 'text-gray-300' : 'text-gray-600'}`}>
+                        <p className="text-sm truncate text-gray-600">
                           {userData.department}
                         </p>
                       </div>
@@ -298,7 +296,7 @@ const Profile = () => {
                       <Calendar className="h-4 w-4 text-gray-500" />
                       <div>
                         <p className="text-sm font-medium">Joined</p>
-                        <p className={`text-sm ${isEmergencyMode ? 'text-gray-300' : 'text-gray-600'}`}>
+                        <p className="text-sm text-gray-600">
                           {userData.joinDate}
                         </p>
                       </div>
@@ -325,11 +323,11 @@ const Profile = () => {
                 </TabsList>
                 
                 <TabsContent value="about" className="space-y-6">
-                  <Card className={isEmergencyMode ? 'bg-black/60 border-water-danger/30 text-white' : 'bg-white'}>
+                  <Card className="bg-white">
                     <CardHeader className="flex flex-row items-center justify-between">
                       <div>
                         <CardTitle>About Me</CardTitle>
-                        <CardDescription className={isEmergencyMode ? 'text-gray-300' : 'text-gray-600'}>
+                        <CardDescription className="text-gray-600">
                           Professional background and expertise
                         </CardDescription>
                       </div>
@@ -344,17 +342,17 @@ const Profile = () => {
                       </Button>
                     </CardHeader>
                     <CardContent>
-                      <p className={`whitespace-pre-line ${isEmergencyMode ? 'text-gray-300' : 'text-gray-600'}`}>
+                      <p className="whitespace-pre-line text-gray-600">
                         {userData.bio}
                       </p>
                     </CardContent>
                   </Card>
                   
-                  <Card className={isEmergencyMode ? 'bg-black/60 border-water-danger/30 text-white' : 'bg-white'}>
+                  <Card className="bg-white">
                     <CardHeader className="flex flex-row items-center justify-between">
                       <div>
                         <CardTitle>Certifications</CardTitle>
-                        <CardDescription className={isEmergencyMode ? 'text-gray-300' : 'text-gray-600'}>
+                        <CardDescription className="text-gray-600">
                           Professional certifications and qualifications
                         </CardDescription>
                       </div>
@@ -377,7 +375,7 @@ const Profile = () => {
                             <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-2">
                               <div className="flex-1">
                                 <h3 className="text-lg font-semibold">{cert.title}</h3>
-                                <p className={`${isEmergencyMode ? 'text-gray-300' : 'text-gray-600'}`}>{cert.issuer}</p>
+                                <p className="text-gray-600">{cert.issuer}</p>
                               </div>
                               <div className="flex items-center gap-1">
                                 <Badge variant="outline" className="whitespace-nowrap">
@@ -406,11 +404,11 @@ const Profile = () => {
                 </TabsContent>
                 
                 <TabsContent value="experience" className="space-y-6">
-                  <Card className={isEmergencyMode ? 'bg-black/60 border-water-danger/30 text-white' : 'bg-white'}>
+                  <Card className="bg-white">
                     <CardHeader className="flex flex-row items-center justify-between">
                       <div>
                         <CardTitle>Work Experience</CardTitle>
-                        <CardDescription className={isEmergencyMode ? 'text-gray-300' : 'text-gray-600'}>
+                        <CardDescription className="text-gray-600">
                           Professional work history
                         </CardDescription>
                       </div>
@@ -460,12 +458,12 @@ const Profile = () => {
                                   <p className="font-medium">{exp.company}</p>
                                   <div className="flex items-center text-sm">
                                     <MapPin className="h-3 w-3 mr-1 text-gray-500" />
-                                    <span className={`${isEmergencyMode ? 'text-gray-300' : 'text-gray-600'}`}>
+                                    <span className="text-gray-600">
                                       {exp.location}
                                     </span>
                                   </div>
                                 </div>
-                                <p className={`${isEmergencyMode ? 'text-gray-300' : 'text-gray-600'}`}>
+                                <p className="text-gray-600">
                                   {exp.description}
                                 </p>
                               </div>
@@ -478,11 +476,11 @@ const Profile = () => {
                 </TabsContent>
                 
                 <TabsContent value="skills" className="space-y-6">
-                  <Card className={isEmergencyMode ? 'bg-black/60 border-water-danger/30 text-white' : 'bg-white'}>
+                  <Card className="bg-white">
                     <CardHeader className="flex flex-row items-center justify-between">
                       <div>
                         <CardTitle>Professional Skills</CardTitle>
-                        <CardDescription className={isEmergencyMode ? 'text-gray-300' : 'text-gray-600'}>
+                        <CardDescription className="text-gray-600">
                           Technical expertise and competencies
                         </CardDescription>
                       </div>
@@ -503,7 +501,7 @@ const Profile = () => {
                           <div key={skill.name} className="space-y-2">
                             <div className="flex justify-between items-center">
                               <h3 className="font-medium">{skill.name}</h3>
-                              <span className={`text-sm ${isEmergencyMode ? 'text-gray-300' : 'text-gray-600'}`}>
+                              <span className="text-sm text-gray-600">
                                 {skill.level}%
                               </span>
                             </div>
@@ -526,10 +524,10 @@ const Profile = () => {
                 </TabsContent>
                 
                 <TabsContent value="activity" className="space-y-6">
-                  <Card className={isEmergencyMode ? 'bg-black/60 border-water-danger/30 text-white' : 'bg-white'}>
+                  <Card className="bg-white">
                     <CardHeader>
                       <CardTitle>Recent Activity</CardTitle>
-                      <CardDescription className={isEmergencyMode ? 'text-gray-300' : 'text-gray-600'}>
+                      <CardDescription className="text-gray-600">
                         Latest actions and platform activity
                       </CardDescription>
                     </CardHeader>
@@ -556,7 +554,7 @@ const Profile = () => {
                                     {activity.date}
                                   </Badge>
                                 </div>
-                                <p className={`${isEmergencyMode ? 'text-gray-300' : 'text-gray-600'}`}>
+                                <p className="text-gray-600">
                                   {activity.description}
                                 </p>
                               </div>
@@ -577,7 +575,7 @@ const Profile = () => {
           </div>
         </main>
       </div>
-      {isMobile && <Sidebar isEmergencyMode={isEmergencyMode} />}
+      {isMobile && <Sidebar />}
       
       {/* Edit Dialog */}
       <Dialog open={isEditDialogOpen} onOpenChange={setIsEditDialogOpen}>

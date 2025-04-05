@@ -3,7 +3,6 @@ import { Navbar } from "@/components/layout/Navbar";
 import { Sidebar } from "@/components/layout/Sidebar";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbSeparator } from "@/components/ui/breadcrumb";
-// Import missing Check and X icons
 import { 
   Home, 
   Settings as SettingsIcon, 
@@ -18,7 +17,7 @@ import {
   Lock, 
   Check,
   X,
-  PlusCircle  // Add this import for the PlusCircle icon
+  PlusCircle  
 } from "lucide-react";
 import { Link } from "react-router-dom";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
@@ -54,7 +53,7 @@ import {
   DialogTitle,
   DialogTrigger,
   DialogClose,
-  DialogFooter // Add this import for DialogFooter
+  DialogFooter
 } from "@/components/ui/dialog"
 import {
   Form,
@@ -111,7 +110,6 @@ interface RetentionPolicy {
 }
 
 const DataManagementSettings = () => {
-  const [isEmergencyMode, setIsEmergencyMode] = useState(false);
   const isMobile = useIsMobile();
   const { toast } = useToast();
   const [searchQuery, setSearchQuery] = useState("");
@@ -440,10 +438,10 @@ const DataManagementSettings = () => {
   };
 
   return (
-    <div className={`min-h-screen ${isEmergencyMode ? 'emergency-mode' : ''}`}>
-      <Navbar isEmergencyMode={isEmergencyMode} setIsEmergencyMode={setIsEmergencyMode} />
+    <div className="min-h-screen">
+      <Navbar />
       <div className="flex">
-        {!isMobile && <Sidebar isEmergencyMode={isEmergencyMode} />}
+        {!isMobile && <Sidebar />}
         <main className="flex-1 p-4 md:p-6 max-w-full overflow-x-hidden">
           <Breadcrumb className="mb-4 md:mb-6">
             <BreadcrumbList>
@@ -475,10 +473,10 @@ const DataManagementSettings = () => {
           </Breadcrumb>
 
           <div className="mb-6">
-            <h1 className={`text-3xl font-bold mb-2 ${isEmergencyMode ? 'text-water-danger' : 'text-water-dark'}`}>
+            <h1 className="text-3xl font-bold mb-2 text-water-dark">
               Data Management
             </h1>
-            <p className={`text-lg ${isEmergencyMode ? 'text-gray-300' : 'text-gray-600'}`}>
+            <p className="text-lg text-gray-600">
               Manage your water quality data, exports, and retention policies
             </p>
           </div>
@@ -927,7 +925,7 @@ const DataManagementSettings = () => {
           </Tabs>
         </main>
       </div>
-      {isMobile && <Sidebar isEmergencyMode={isEmergencyMode} />}
+      {isMobile && <Sidebar />}
     </div>
   );
 };
