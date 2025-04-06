@@ -14,7 +14,8 @@ import {
   DropdownMenuSeparator, 
   DropdownMenuTrigger 
 } from "@/components/ui/dropdown-menu";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { ComplianceTools } from "./ComplianceTools";
 
 interface Message {
   id: string;
@@ -82,6 +83,7 @@ export function WaterChatbot({ isEmergencyMode = false }: WaterChatbotProps) {
   const [selectedQuickRef, setSelectedQuickRef] = useState<string | null>(null);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const { toast } = useToast();
+  const navigate = useNavigate();
   
   const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
   const recognition = SpeechRecognition ? new SpeechRecognition() : null;
@@ -258,6 +260,17 @@ export function WaterChatbot({ isEmergencyMode = false }: WaterChatbotProps) {
       </div>
     );
   };
+
+  const handleViewHistoricalReports = () => {
+    navigate('/reports');
+  };
+
+  const handleRequestConsultation = () => {
+    toast({
+      title: "Consultation Request Sent",
+      description: "An expert will contact you within 24 hours to schedule a consultation.",
+    });
+  };
   
   return (
     <div className={cn("container mx-auto p-4 h-full", isEmergencyMode ? "text-white" : "")}>
@@ -354,98 +367,20 @@ export function WaterChatbot({ isEmergencyMode = false }: WaterChatbotProps) {
               <CardTitle>Compliance Tools</CardTitle>
               <CardDescription className={isEmergencyMode ? "text-gray-400" : ""}>Generate reports and assessments for water quality compliance</CardDescription>
             </CardHeader>
-            <CardContent className="flex-1">
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                <Card className={isEmergencyMode ? "bg-gray-800 border-gray-700" : ""}>
-                  <CardHeader className="pb-2">
-                    <CardTitle className="text-lg">Compliance Report</CardTitle>
-                    <CardDescription className={isEmergencyMode ? "text-gray-400" : ""}>Generate a comprehensive compliance report based on your water quality data</CardDescription>
-                  </CardHeader>
-                  <CardContent>
-                    <p className={cn("text-sm mb-4", isEmergencyMode ? "text-gray-400" : "text-gray-600")}>
-                      This report evaluates your current compliance status with federal, state, and local regulations.
-                    </p>
-                    <ul className={cn("text-sm list-disc pl-4 mb-4", isEmergencyMode ? "text-gray-400" : "text-gray-600")}>
-                      <li>SDWA compliance evaluation</li>
-                      <li>CWA requirements analysis</li>
-                      <li>Local regulation compliance</li>
-                      <li>Recommended corrective actions</li>
-                    </ul>
-                  </CardContent>
-                  <CardFooter>
-                    <Button 
-                      className="w-full" 
-                      onClick={generateComplianceReport}
-                      variant={isEmergencyMode ? "default" : "default"}
-                    >
-                      <FileText className="h-4 w-4 mr-2" />
-                      Generate Report
-                    </Button>
-                  </CardFooter>
-                </Card>
-                
-                <Card className={isEmergencyMode ? "bg-gray-800 border-gray-700" : ""}>
-                  <CardHeader className="pb-2">
-                    <CardTitle className="text-lg">Risk Assessment</CardTitle>
-                    <CardDescription className={isEmergencyMode ? "text-gray-400" : ""}>Evaluate potential risks in your water quality management system</CardDescription>
-                  </CardHeader>
-                  <CardContent>
-                    <p className="text-sm text-gray-600 mb-4">
-                      Identifies vulnerabilities and provides a prioritized list of actions to mitigate risks.
-                    </p>
-                    <ul className="text-sm text-gray-600 list-disc pl-4 mb-4">
-                      <li>Contamination risk analysis</li>
-                      <li>Infrastructure vulnerability assessment</li>
-                      <li>Emergency response readiness</li>
-                      <li>Risk mitigation strategies</li>
-                    </ul>
-                  </CardContent>
-                  <CardFooter>
-                    <Button className="w-full" onClick={generateRiskAssessment}>
-                      <AlertTriangle className="h-4 w-4 mr-2" />
-                      Run Assessment
-                    </Button>
-                  </CardFooter>
-                </Card>
-                
-                <Card className={isEmergencyMode ? "bg-gray-800 border-gray-700" : ""}>
-                  <CardHeader className="pb-2">
-                    <CardTitle className="text-lg">Regulatory Cross-Check</CardTitle>
-                    <CardDescription className={isEmergencyMode ? "text-gray-400" : ""}>Compare your data against all applicable regulations</CardDescription>
-                  </CardHeader>
-                  <CardContent>
-                    <p className="text-sm text-gray-600 mb-4">
-                      Cross-checks your water quality data against federal, state, and local regulatory requirements.
-                    </p>
-                    <ul className="text-sm text-gray-600 list-disc pl-4 mb-4">
-                      <li>Multi-jurisdiction compliance</li>
-                      <li>Regulatory conflict analysis</li>
-                      <li>Compliance gap identification</li>
-                      <li>Historical compliance trends</li>
-                    </ul>
-                  </CardContent>
-                  <CardFooter>
-                    <Button className="w-full" onClick={performRegulatoryCheck}>
-                      <Rabbit className="h-4 w-4 mr-2" />
-                      Run Cross-Check
-                    </Button>
-                  </CardFooter>
-                </Card>
-              </div>
+            <CardContent className="flex-1 overflow-y-auto">
+              <ComplianceTools />
               
               <div className="mt-8 bg-gray-50 rounded-lg p-6 border border-gray-200">
                 <h3 className="text-lg font-semibold mb-2">Additional Resources</h3>
                 <p className="text-gray-600 mb-4">
                   These tools leverage the Hydra AI system to analyze your water quality data and provide actionable insights. For more detailed analysis, our team of water quality experts is available for consultation.
                 </p>
-                <div className="flex space-x-4">
-                  <Link to="/reports">
-                    <Button variant="outline">
-                      <FileText className="h-4 w-4 mr-2" />
-                      View Historical Reports
-                    </Button>
-                  </Link>
-                  <Button variant="outline">
+                <div className="flex flex-wrap gap-4">
+                  <Button variant="outline" onClick={handleViewHistoricalReports}>
+                    <FileText className="h-4 w-4 mr-2" />
+                    View Historical Reports
+                  </Button>
+                  <Button variant="outline" onClick={handleRequestConsultation}>
                     <Mail className="h-4 w-4 mr-2" />
                     Request Expert Consultation
                   </Button>
@@ -461,7 +396,7 @@ export function WaterChatbot({ isEmergencyMode = false }: WaterChatbotProps) {
               <CardTitle>Quick Reference</CardTitle>
               <CardDescription className={isEmergencyMode ? "text-gray-400" : ""}>Essential information for water quality management</CardDescription>
             </CardHeader>
-            <CardContent className="flex-1">
+            <CardContent className="flex-1 overflow-y-auto">
               <div className="flex h-full">
                 <div className="w-1/3 border-r pr-4">
                   <nav className="space-y-2">
@@ -479,7 +414,7 @@ export function WaterChatbot({ isEmergencyMode = false }: WaterChatbotProps) {
                     ))}
                   </nav>
                 </div>
-                <div className="w-2/3 pl-4">
+                <div className="w-2/3 pl-4 overflow-y-auto">
                   {renderQuickReferenceContent()}
                 </div>
               </div>

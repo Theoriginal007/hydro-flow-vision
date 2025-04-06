@@ -1,65 +1,58 @@
 
-import { Toaster } from "@/components/ui/toaster";
-import { Toaster as Sonner } from "@/components/ui/sonner";
-import { TooltipProvider } from "@/components/ui/tooltip";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { useState } from "react";
+import './App.css';
+import { ThemeProvider } from "./components/ThemeProvider";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Index from "./pages/Index";
+import NotFound from "./pages/NotFound";
 import WaterSamples from "./pages/WaterSamples";
 import TreatmentSimulator from "./pages/TreatmentSimulator";
 import Reports from "./pages/Reports";
 import AIChatbot from "./pages/AIChatbot";
-import NotFound from "./pages/NotFound";
-import Profile from "./pages/Profile";
 import Settings from "./pages/Settings";
+import IntegrationsSettings from "./pages/settings/IntegrationsSettings";
+import AppearanceSettings from "./pages/settings/AppearanceSettings";
 import AccountSettings from "./pages/settings/AccountSettings";
 import NotificationSettings from "./pages/settings/NotificationSettings";
-import AppearanceSettings from "./pages/settings/AppearanceSettings";
-import SecuritySettings from "./pages/settings/SecuritySettings";
-import IntegrationsSettings from "./pages/settings/IntegrationsSettings";
 import DataManagementSettings from "./pages/settings/DataManagementSettings";
+import SecuritySettings from "./pages/settings/SecuritySettings";
 import HelpDocumentation from "./pages/settings/HelpDocumentation";
-import Diagnostics from "./pages/Diagnostics";
-import AlertConfiguration from "./pages/AlertConfiguration";
-import GenerateReport from "./pages/GenerateReport";
+import Profile from "./pages/Profile";
 import QuickFix from "./pages/QuickFix";
+import Diagnostics from "./pages/Diagnostics";
+import GenerateReport from "./pages/GenerateReport";
+import AlertConfiguration from "./pages/AlertConfiguration";
+import HistoricalReports from "./pages/HistoricalReports";
 
-const queryClient = new QueryClient();
-
-const App = () => (
-  <QueryClientProvider client={queryClient}>
-    <TooltipProvider>
-      <Toaster />
-      <Sonner />
-      <BrowserRouter>
+function App() {
+  return (
+    <ThemeProvider defaultTheme="light" storageKey="water-dashboard-theme">
+      <Router>
         <Routes>
           <Route path="/" element={<Index />} />
           <Route path="/water-samples" element={<WaterSamples />} />
           <Route path="/treatment-simulator" element={<TreatmentSimulator />} />
           <Route path="/reports" element={<Reports />} />
+          <Route path="/historical-reports" element={<HistoricalReports />} />
           <Route path="/ai-chatbot" element={<AIChatbot />} />
-          <Route path="/profile" element={<Profile />} />
           <Route path="/settings" element={<Settings />} />
+          <Route path="/settings/integrations" element={<IntegrationsSettings />} />
+          <Route path="/settings/appearance" element={<AppearanceSettings />} />
           <Route path="/settings/account" element={<AccountSettings />} />
           <Route path="/settings/notifications" element={<NotificationSettings />} />
-          <Route path="/settings/appearance" element={<AppearanceSettings />} />
+          <Route path="/settings/data-management" element={<DataManagementSettings />} />
           <Route path="/settings/security" element={<SecuritySettings />} />
-          <Route path="/settings/integrations" element={<IntegrationsSettings />} />
-          <Route path="/settings/data" element={<DataManagementSettings />} />
           <Route path="/settings/help" element={<HelpDocumentation />} />
-          
-          {/* Dashboard Quick Action Routes */}
-          <Route path="/diagnostics" element={<Diagnostics />} />
-          <Route path="/alert-configuration" element={<AlertConfiguration />} />
-          <Route path="/generate-report" element={<GenerateReport />} />
+          <Route path="/profile" element={<Profile />} />
           <Route path="/quick-fix" element={<QuickFix />} />
-          
-          {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
+          <Route path="/diagnostics" element={<Diagnostics />} />
+          <Route path="/generate-report" element={<GenerateReport />} />
+          <Route path="/alert-configuration" element={<AlertConfiguration />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
-      </BrowserRouter>
-    </TooltipProvider>
-  </QueryClientProvider>
-);
+      </Router>
+    </ThemeProvider>
+  );
+}
 
 export default App;

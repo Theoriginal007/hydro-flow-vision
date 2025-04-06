@@ -50,6 +50,11 @@ AquaPure AI is a comprehensive water treatment management system that uses artif
   - Penalty Calculator for non-compliance cost estimation
   - Regulatory Scanner for document compliance analysis
   - Violation Resolver with step-by-step resolution guidance
+- Interactive tabbed interface with dedicated sections for:
+  - AI chat assistant with voice input capability
+  - Comprehensive compliance tools with detailed analysis
+  - Quick reference library of water treatment knowledge
+- Historical report access and expert consultation request
 
 ## Technology Stack
 
@@ -217,6 +222,30 @@ The AquaPure system integrates with ERP and other enterprise systems through the
 6. Resolution workflows triggered for non-compliance issues
 7. Audit trail maintained for all compliance activities
 
+### Regulatory Compliance Features
+
+The AquaPure system includes specialized tools to ensure water treatment operations comply with all applicable regulations:
+
+#### Penalty Calculator
+- Estimates potential financial penalties for compliance violations
+- Considers violation type, duration, severity, and company factors
+- Provides detailed breakdown of calculation methodology
+- Helps prioritize remediation efforts based on financial impact
+
+#### Regulatory Document Scanner
+- AI-powered document analysis for compliance vulnerabilities
+- Processes PDFs and document files for automated review
+- Cross-references content against current regulatory requirements
+- Generates detailed compliance reports with actionable recommendations
+- Tracks document compliance history and improvement trends
+
+#### Violation Resolution System
+- Step-by-step guided workflows for resolving compliance issues
+- Systematic approach through identification, planning, implementation and verification
+- Progress tracking and documentation for regulatory submissions
+- Creates auditable trail of remediation efforts
+- Integrates with regulatory reporting systems
+
 ## Advanced Analytics & Business Intelligence
 
 The integration between frontend and backend systems enables sophisticated analytics:
@@ -283,4 +312,3 @@ The application is built for production deployment and includes:
 ## License
 
 This project is proprietary software.
-
