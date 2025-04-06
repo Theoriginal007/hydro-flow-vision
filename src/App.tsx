@@ -26,7 +26,7 @@ import HistoricalReports from "./pages/HistoricalReports";
 
 function App() {
   return (
-    <ThemeProvider defaultTheme="light" storageKey="water-dashboard-theme">
+    <ThemeProvider>
       <Router>
         <Routes>
           <Route path="/" element={<Index />} />

@@ -50,7 +50,7 @@ export function VoiceCommandButton() {
     if (!isListening) {
       toast({
         title: "Listening for commands",
-        description: "Try saying 'Hey Hydro, analyze this' or 'Check water sample'",
+        description: "Try saying 'Hey Hydra, analyze this' or 'Check water sample'",
       });
     } else {
       toast({
@@ -85,7 +85,7 @@ export function VoiceCommandButton() {
             ? <MicOff className="h-5 w-5" /> 
             : <Mic className="h-5 w-5" />
           }
-          <span>{isListening ? "Stop Listening" : "Hey Hydro"}</span>
+          <span>{isListening ? "Stop Listening" : "Hey Hydra"}</span>
         </div>
       </Button>
     </div>
