@@ -19,6 +19,10 @@ import SecuritySettings from "./pages/settings/SecuritySettings";
 import IntegrationsSettings from "./pages/settings/IntegrationsSettings";
 import DataManagementSettings from "./pages/settings/DataManagementSettings";
 import HelpDocumentation from "./pages/settings/HelpDocumentation";
+import Diagnostics from "./pages/Diagnostics";
+import AlertConfiguration from "./pages/AlertConfiguration";
+import GenerateReport from "./pages/GenerateReport";
+import QuickFix from "./pages/QuickFix";
 
 const queryClient = new QueryClient();
 
@@ -43,6 +47,13 @@ const App = () => (
           <Route path="/settings/integrations" element={<IntegrationsSettings />} />
           <Route path="/settings/data" element={<DataManagementSettings />} />
           <Route path="/settings/help" element={<HelpDocumentation />} />
+          
+          {/* Dashboard Quick Action Routes */}
+          <Route path="/diagnostics" element={<Diagnostics />} />
+          <Route path="/alert-configuration" element={<AlertConfiguration />} />
+          <Route path="/generate-report" element={<GenerateReport />} />
+          <Route path="/quick-fix" element={<QuickFix />} />
+          
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>

@@ -2,23 +2,34 @@
 import { Button } from "@/components/ui/button";
 import { Bell, Download, RefreshCw, Zap } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
+import { useNavigate } from "react-router-dom";
 
 export function QuickActions() {
   const { toast } = useToast();
+  const navigate = useNavigate();
   
   const handleAction = (action: string) => {
     toast({
       title: `Action: ${action}`,
-      description: "Processing your request...",
+      description: "Navigating to action page...",
     });
     
-    // Simulate completion after a delay
-    setTimeout(() => {
-      toast({
-        title: "Complete",
-        description: `${action} completed successfully`,
-      });
-    }, 1500);
+    switch(action) {
+      case "Scan System":
+        navigate("/diagnostics");
+        break;
+      case "Configure Alerts":
+        navigate("/alert-configuration");
+        break;
+      case "Generate Report":
+        navigate("/generate-report");
+        break;
+      case "Quick Fix":
+        navigate("/quick-fix");
+        break;
+      default:
+        break;
+    }
   };
   
   return (

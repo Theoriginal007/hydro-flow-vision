@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import { Play, PauseCircle, RotateCcw } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
-import { toast } from "@/components/ui/use-toast";
+import { useToast } from "@/hooks/use-toast";
 
 interface TreatmentSimulatorProps {
   treatmentType: "filtration" | "chemical" | "biological";
@@ -17,6 +17,7 @@ export const TreatmentSimulator = ({ treatmentType }: TreatmentSimulatorProps) =
   const [cost, setCost] = useState(0);
   const [stage, setStage] = useState(0);
   const [particles, setParticles] = useState<Array<{x: number, y: number, size: number, color: string}>>([]);
+  const { toast } = useToast();
   
   // Generate random particles for visualization
   useEffect(() => {
