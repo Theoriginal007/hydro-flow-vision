@@ -2,7 +2,7 @@
 import { useState } from "react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Scale, Shield, VolumeX, Calculator, X, FileText, ArrowRight } from "lucide-react";
+import { Scale, Shield, VolumeX, Calculator, X, FileText, ArrowRight, Loader2 } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Label } from "@/components/ui/label";
@@ -250,9 +250,9 @@ export function ComplianceTools() {
                             <SelectValue placeholder="Select company size" />
                           </SelectTrigger>
                           <SelectContent>
-                            <SelectItem value="small">Small (< 50 employees)</SelectItem>
+                            <SelectItem value="small">Small (&lt; 50 employees)</SelectItem>
                             <SelectItem value="medium">Medium (50-500 employees)</SelectItem>
-                            <SelectItem value="large">Large (> 500 employees)</SelectItem>
+                            <SelectItem value="large">Large (&gt; 500 employees)</SelectItem>
                           </SelectContent>
                         </Select>
                       </div>
