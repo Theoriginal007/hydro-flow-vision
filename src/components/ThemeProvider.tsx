@@ -3,6 +3,8 @@ import { createContext, useContext, useState } from "react";
 
 type ThemeProviderProps = {
   children: React.ReactNode;
+  defaultTheme?: "light"; // Make this prop optional with default value
+  storageKey?: string;    // Make this prop optional
 };
 
 type ThemeProviderState = {
@@ -17,9 +19,12 @@ const ThemeProviderContext = createContext<ThemeProviderState>(initialState);
 
 export function ThemeProvider({
   children,
+  defaultTheme = "light", // Default value if not provided
+  storageKey = "theme",   // Default value if not provided
   ...props
 }: ThemeProviderProps) {
-  // Always light theme
+  // Always light theme - the defaultTheme and storageKey props
+  // are now accepted but not used in the current implementation
   const [theme] = useState<"light">("light");
 
   const value = {
