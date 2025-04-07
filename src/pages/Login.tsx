@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
@@ -30,7 +29,7 @@ const Login = () => {
       title: "Welcome back!",
       description: "You have been successfully logged in.",
     });
-    navigate("/");
+    navigate("/dashboard");
   };
 
   const handleSignupSubmit = (e: React.FormEvent) => {
@@ -39,7 +38,7 @@ const Login = () => {
       title: "Account created!",
       description: "Your account has been successfully created.",
     });
-    navigate("/");
+    navigate("/dashboard");
   };
 
   const updateLoginForm = (e: React.ChangeEvent<HTMLInputElement>) => {
