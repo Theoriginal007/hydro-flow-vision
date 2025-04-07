@@ -2,7 +2,7 @@
 import { useState } from "react";
 import './App.css';
 import { ThemeProvider } from "./components/ThemeProvider";
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import { BrowserRouter as Router, Route, Routes, Navigate } from "react-router-dom";
 import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
 import WaterSamples from "./pages/WaterSamples";
@@ -23,12 +23,14 @@ import Diagnostics from "./pages/Diagnostics";
 import GenerateReport from "./pages/GenerateReport";
 import AlertConfiguration from "./pages/AlertConfiguration";
 import HistoricalReports from "./pages/HistoricalReports";
+import Login from "./pages/Login";
 
 function App() {
   return (
     <ThemeProvider>
       <Router>
         <Routes>
+          <Route path="/login" element={<Login />} />
           <Route path="/" element={<Index />} />
           <Route path="/water-samples" element={<WaterSamples />} />
           <Route path="/treatment-simulator" element={<TreatmentSimulator />} />
