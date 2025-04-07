@@ -35,7 +35,7 @@ export function Sidebar({}: SidebarProps) {
   const navigationItems = [
     {
       name: "Dashboard",
-      path: "/",
+      path: "/dashboard",
       icon: Home,
       description: "Water Quality Overview"
     }

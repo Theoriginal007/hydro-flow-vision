@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
@@ -90,7 +91,7 @@ const Login = () => {
                         placeholder="name@example.com"
                         className="pl-10"
                         value={loginForm.email}
-                        onChange={updateLoginForm}
+                        onChange={(e) => setLoginForm({...loginForm, email: e.target.value})}
                         required
                       />
                     </div>
@@ -111,7 +112,7 @@ const Login = () => {
                         placeholder="••••••••"
                         className="pl-10"
                         value={loginForm.password}
-                        onChange={updateLoginForm}
+                        onChange={(e) => setLoginForm({...loginForm, password: e.target.value})}
                         required
                       />
                       <button
@@ -157,7 +158,7 @@ const Login = () => {
                         placeholder="John Doe"
                         className="pl-10"
                         value={signupForm.name}
-                        onChange={updateSignupForm}
+                        onChange={(e) => setSignupForm({...signupForm, name: e.target.value})}
                         required
                       />
                     </div>
@@ -173,7 +174,7 @@ const Login = () => {
                         placeholder="name@example.com"
                         className="pl-10"
                         value={signupForm.email}
-                        onChange={updateSignupForm}
+                        onChange={(e) => setSignupForm({...signupForm, email: e.target.value})}
                         required
                       />
                     </div>
@@ -189,7 +190,7 @@ const Login = () => {
                         placeholder="••••••••"
                         className="pl-10"
                         value={signupForm.password}
-                        onChange={updateSignupForm}
+                        onChange={(e) => setSignupForm({...signupForm, password: e.target.value})}
                         required
                       />
                       <button
@@ -216,7 +217,7 @@ const Login = () => {
                         placeholder="••••••••"
                         className="pl-10"
                         value={signupForm.confirmPassword}
-                        onChange={updateSignupForm}
+                        onChange={(e) => setSignupForm({...signupForm, confirmPassword: e.target.value})}
                         required
                       />
                     </div>
