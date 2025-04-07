@@ -14,7 +14,7 @@ import {
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { VoiceCommandButton } from "@/components/ui/voice-command-button";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { useState } from "react";
@@ -24,6 +24,7 @@ export interface SidebarProps {}
 
 export function Sidebar({}: SidebarProps) {
   const location = useLocation();
+  const navigate = useNavigate();
   const isMobile = useIsMobile();
   const [open, setOpen] = useState(false);
   const [aiMenuOpen, setAiMenuOpen] = useState(true);
@@ -68,6 +69,19 @@ export function Sidebar({}: SidebarProps) {
     }
   ];
 
+  // Custom navigation function to prevent 404 errors
+  const handleNavigation = (path: string) => (e: React.MouseEvent) => {
+    e.preventDefault();
+    // Only navigate if not already on that page
+    if (location.pathname !== path) {
+      navigate(path);
+    }
+    // Close sidebar if on mobile
+    if (isMobile) {
+      setOpen(false);
+    }
+  };
+
   const SidebarContent = () => (
     <div className="w-full h-full flex flex-col p-4 bg-white text-gray-800">
       <div className="space-y-2">
@@ -81,18 +95,15 @@ export function Sidebar({}: SidebarProps) {
               "text-gray-700 hover:bg-water-light/50",
               isActivePath(item.path) && "bg-water-light/50"
             )}
-            onClick={() => isMobile && setOpen(false)}
-            asChild
+            onClick={handleNavigation(item.path)}
           >
-            <Link to={item.path}>
-              <item.icon className="mr-2 h-4 w-4" />
-              <div className="flex flex-col items-start">
-                <span>{item.name}</span>
-                {item.description && (
-                  <span className="text-xs text-muted-foreground mt-0.5">{item.description}</span>
-                )}
-              </div>
-            </Link>
+            <item.icon className="mr-2 h-4 w-4" />
+            <div className="flex flex-col items-start">
+              <span>{item.name}</span>
+              {item.description && (
+                <span className="text-xs text-muted-foreground mt-0.5">{item.description}</span>
+              )}
+            </div>
           </Button>
         ))}
         
@@ -129,18 +140,15 @@ export function Sidebar({}: SidebarProps) {
                   "text-gray-700 hover:bg-water-light/50",
                   isActivePath(item.path) && "bg-water-light/50"
                 )}
-                onClick={() => isMobile && setOpen(false)}
-                asChild
+                onClick={handleNavigation(item.path)}
               >
-                <Link to={item.path}>
-                  <item.icon className="mr-2 h-4 w-4" />
-                  <div className="flex flex-col items-start">
-                    <span>{item.name}</span>
-                    {item.description && (
-                      <span className="text-xs text-muted-foreground mt-0.5">{item.description}</span>
-                    )}
-                  </div>
-                </Link>
+                <item.icon className="mr-2 h-4 w-4" />
+                <div className="flex flex-col items-start">
+                  <span>{item.name}</span>
+                  {item.description && (
+                    <span className="text-xs text-muted-foreground mt-0.5">{item.description}</span>
+                  )}
+                </div>
               </Button>
             ))}
           </CollapsibleContent>

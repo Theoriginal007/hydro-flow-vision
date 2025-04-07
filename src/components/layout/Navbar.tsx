@@ -1,4 +1,3 @@
-
 import { Bell, Menu, Settings, User, LogOut, HelpCircle, ChevronDown, Shield, FileText, AlertTriangle, Database, Activity, ArrowUpRight, Monitor } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
@@ -18,7 +17,7 @@ import {
   DropdownMenuSubContent,
   DropdownMenuPortal
 } from "@/components/ui/dropdown-menu";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import { 
   Dialog,
   DialogContent,
@@ -105,6 +104,7 @@ export function Navbar({}: NavbarProps) {
   const [securityDialogOpen, setSecurityDialogOpen] = useState(false);
   const { toast } = useToast();
   const navigate = useNavigate();
+  const location = useLocation();
 
   useEffect(() => {
     setNotificationsCount(notifications.filter(n => !n.read).length);
@@ -198,6 +198,7 @@ export function Navbar({}: NavbarProps) {
       title: "Logged Out",
       description: "You have been logged out successfully",
     });
+    navigate('/login');
   };
 
   const handleSaveSettings = (tab: string) => {
@@ -211,6 +212,16 @@ export function Navbar({}: NavbarProps) {
     navigate("/profile");
   };
 
+  const handleNavigation = (path: string) => (e: React.MouseEvent) => {
+    e.preventDefault();
+    if (location.pathname !== path) {
+      navigate(path);
+    }
+    if (isMobile) {
+      setIsMenuOpen(false);
+    }
+  };
+
   return (
     <div className="sticky top-0 z-50 w-full border-b bg-white/90 border-water-light backdrop-blur-sm">
       <div className="container flex h-16 items-center justify-between">
@@ -218,7 +229,10 @@ export function Navbar({}: NavbarProps) {
           <div className="flex items-center justify-center overflow-hidden rounded-full h-8 w-8 bg-water-dark">
             <span className="font-semibold text-white">H</span>
           </div>
-          <span className="font-semibold text-xl text-water-dark">
+          <span 
+            className="font-semibold text-xl text-water-dark cursor-pointer" 
+            onClick={handleNavigation('/dashboard')}
+          >
             Hydra
           </span>
         </div>
@@ -253,51 +267,51 @@ export function Navbar({}: NavbarProps) {
                 </div>
                 
                 <div className="flex flex-col w-full">
-                  <Link to="/" onClick={() => setIsMenuOpen(false)}>
-                    <DropdownMenuItem className="hover:bg-water-light/50">
+                  <div onClick={handleNavigation('/dashboard')}>
+                    <DropdownMenuItem className="hover:bg-water-light/50 cursor-pointer">
                       Dashboard
                     </DropdownMenuItem>
-                  </Link>
+                  </div>
                   
-                  <Link to="/water-samples" onClick={() => setIsMenuOpen(false)}>
-                    <DropdownMenuItem className="hover:bg-water-light/50">
+                  <div onClick={handleNavigation('/water-samples')}>
+                    <DropdownMenuItem className="hover:bg-water-light/50 cursor-pointer">
                       Water Samples
                     </DropdownMenuItem>
-                  </Link>
+                  </div>
                   
-                  <Link to="/treatment-simulator" onClick={() => setIsMenuOpen(false)}>
-                    <DropdownMenuItem className="hover:bg-water-light/50">
+                  <div onClick={handleNavigation('/treatment-simulator')}>
+                    <DropdownMenuItem className="hover:bg-water-light/50 cursor-pointer">
                       Treatment Simulator
                     </DropdownMenuItem>
-                  </Link>
+                  </div>
                   
-                  <Link to="/reports" onClick={() => setIsMenuOpen(false)}>
-                    <DropdownMenuItem className="hover:bg-water-light/50">
+                  <div onClick={handleNavigation('/reports')}>
+                    <DropdownMenuItem className="hover:bg-water-light/50 cursor-pointer">
                       AI Reports
                     </DropdownMenuItem>
-                  </Link>
+                  </div>
                   
-                  <Link to="/ai-chatbot" onClick={() => setIsMenuOpen(false)}>
-                    <DropdownMenuItem className="hover:bg-water-light/50">
+                  <div onClick={handleNavigation('/ai-chatbot')}>
+                    <DropdownMenuItem className="hover:bg-water-light/50 cursor-pointer">
                       AI Chatbot
                     </DropdownMenuItem>
-                  </Link>
+                  </div>
                 </div>
                 
                 <div className="border-t border-gray-200 mt-2 pt-2 flex justify-between items-center px-2">
                   <div className="flex items-center gap-2">
                     <Settings className="text-gray-600" />
-                    <Link to="/settings" onClick={() => setIsMenuOpen(false)}>
-                      <span className="text-sm text-gray-600">Settings</span>
-                    </Link>
+                    <div onClick={handleNavigation('/settings')}>
+                      <span className="text-sm text-gray-600 cursor-pointer">Settings</span>
+                    </div>
                   </div>
                   
-                  <Link to="/profile" onClick={() => setIsMenuOpen(false)}>
-                    <Avatar>
+                  <div onClick={handleNavigation('/profile')}>
+                    <Avatar className="cursor-pointer">
                       <AvatarImage src="https://images.unsplash.com/photo-1599566150163-29194dcaad36?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=774&q=80" />
                       <AvatarFallback>JD</AvatarFallback>
                     </Avatar>
-                  </Link>
+                  </div>
                 </div>
               </DropdownMenuContent>
             </DropdownMenu>
@@ -394,10 +408,8 @@ export function Navbar({}: NavbarProps) {
                   )}
                 </div>
                 <DropdownMenuSeparator />
-                <DropdownMenuItem asChild className="cursor-pointer">
-                  <Link to="/settings/notifications" className="w-full text-center">
-                    View all notifications
-                  </Link>
+                <DropdownMenuItem className="cursor-pointer" onClick={handleNavigation('/settings/notifications')}>
+                  View all notifications
                 </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
@@ -412,11 +424,9 @@ export function Navbar({}: NavbarProps) {
                 <DropdownMenuLabel>Settings</DropdownMenuLabel>
                 <DropdownMenuSeparator />
                 <DropdownMenuGroup>
-                  <DropdownMenuItem asChild>
-                    <Link to="/profile">
-                      <User className="mr-2 h-4 w-4" />
-                      <span>Profile</span>
-                    </Link>
+                  <DropdownMenuItem className="cursor-pointer" onClick={handleNavigation('/profile')}>
+                    <User className="mr-2 h-4 w-4" />
+                    <span>Profile</span>
                   </DropdownMenuItem>
                   <DropdownMenuSub>
                     <DropdownMenuSubTrigger>
@@ -425,41 +435,31 @@ export function Navbar({}: NavbarProps) {
                     </DropdownMenuSubTrigger>
                     <DropdownMenuPortal>
                       <DropdownMenuSubContent>
-                        <DropdownMenuItem asChild>
-                          <Link to="/settings/notifications">
-                            <span>Email Alerts</span>
-                          </Link>
+                        <DropdownMenuItem className="cursor-pointer" onClick={handleNavigation('/settings/notifications')}>
+                          <span>Email Alerts</span>
                         </DropdownMenuItem>
-                        <DropdownMenuItem asChild>
-                          <Link to="/settings/notifications">
-                            <span>Push Notifications</span>
-                          </Link>
+                        <DropdownMenuItem className="cursor-pointer" onClick={handleNavigation('/settings/notifications')}>
+                          <span>Push Notifications</span>
                         </DropdownMenuItem>
                         <DropdownMenuSeparator />
-                        <DropdownMenuItem asChild>
-                          <Link to="/settings/notifications">
-                            <span>Notification Settings</span>
-                          </Link>
+                        <DropdownMenuItem className="cursor-pointer" onClick={handleNavigation('/settings/notifications')}>
+                          <span>Notification Settings</span>
                         </DropdownMenuItem>
                       </DropdownMenuSubContent>
                     </DropdownMenuPortal>
                   </DropdownMenuSub>
-                  <DropdownMenuItem asChild>
-                    <Link to="/settings">
-                      <Settings className="mr-2 h-4 w-4" />
-                      <span>System Preferences</span>
-                    </Link>
+                  <DropdownMenuItem className="cursor-pointer" onClick={handleNavigation('/settings')}>
+                    <Settings className="mr-2 h-4 w-4" />
+                    <span>System Preferences</span>
                   </DropdownMenuItem>
                 </DropdownMenuGroup>
                 <DropdownMenuSeparator />
-                <DropdownMenuItem asChild>
-                  <Link to="/settings/help">
-                    <HelpCircle className="mr-2 h-4 w-4" />
-                    <span>Help & Documentation</span>
-                  </Link>
+                <DropdownMenuItem className="cursor-pointer" onClick={handleNavigation('/settings/help')}>
+                  <HelpCircle className="mr-2 h-4 w-4" />
+                  <span>Help & Documentation</span>
                 </DropdownMenuItem>
                 <DropdownMenuSeparator />
-                <DropdownMenuItem className="text-water-danger" onClick={handleLogout}>
+                <DropdownMenuItem className="text-water-danger cursor-pointer" onClick={handleLogout}>
                   <LogOut className="mr-2 h-4 w-4" />
                   <span>Log out</span>
                 </DropdownMenuItem>
