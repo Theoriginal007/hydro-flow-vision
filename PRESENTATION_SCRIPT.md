@@ -1,4 +1,3 @@
-
 # Hydra Presentation Script for Davis & Shirtliff
 
 ## Introduction (2 minutes)
